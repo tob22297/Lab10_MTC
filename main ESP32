@@ -1,0 +1,34 @@
+#include <Arduino.h>
+
+#define pot1 34
+
+
+//variables del renap 
+int temp1 = 0;
+int valorpot1 = 0;
+char menu;
+
+void setup(){
+  Serial.begin(115200);
+  Serial2.begin(115200);
+}
+
+void loop(){
+  temp1 = analogRead(pot1);
+  valorpot1 = map(temp1,0,4095,0,15);
+//empieza la comunication
+
+if (Serial.available()>0){
+  menu = Serial.read();
+  delay(15);
+}if (menu == '1'){
+  Serial.write(valorpot1);
+  menu = '0';
+}if(menu == '0'){
+  Serial2.printf("mensaje enviado \n");
+}
+
+Serial2.println(valorpot1);
+Serial2.println(menu);
+delay(500);
+}
